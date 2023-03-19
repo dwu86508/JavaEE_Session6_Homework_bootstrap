@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+	<form-beans>		
+		<form-bean name="goodsForm" type="com.training.formbean.GoodsForm"></form-bean>
+		<form-bean name="goodsListSearchForm" type="com.training.formbean.GoodsListSearchForm"></form-bean>
+	</form-beans>
+    <action-mappings>
+        <action path="/FrontendServlet" type="com.training.servlet.FrontEndServlet" parameter="action" name="goodsForm">
+        	<forward name="searchGoods" path="/WEB-INF/FrontEnd/VendingMachineCart.jsp" />        	
+        	<forward name="buyGoods" path="/FrontendServlet.do?action=searchGoods" redirect="true"/>
+        	<forward name="buyGoodsView" path="/WEB-INF/FrontEnd/VendingMachineCart.jsp" />
+        	<forward name="shoppingCarView" path="/WEB-INF/FrontEnd/ShoppingCar.jsp" />
+        	
+        </action>
+        <action path="/BackendServlet" type="com.training.servlet.BackEndServlet" parameter="action" name="goodsListSearchForm">
+        	
+        	<forward name="queryGoods" path="/WEB-INF/BackEnd/VM_Backend_GoodsList.jsp" />
+        	
+        	<forward name="updateGoods" path="/BackendServlet.do?action=updateGoodsView" redirect="true"/>
+        	<forward name="updateGoodsView" path="/WEB-INF/BackEnd/VM_Backend_GoodsReplenishment.jsp" />
+        	
+        	<forward name="addGoods" path="/BackendServlet.do?action=addGoodsView" redirect="true"/>
+        	<forward name="addGoodsView" path="/WEB-INF/BackEnd/VM_Backend_GoodsCreate.jsp" />        	
+        	
+        	<forward name="querySalesReportView" path="/WEB-INF/BackEnd/VM_Backend_GoodsSaleReport.jsp" />
+        </action>
+        
+        <action path="/LoginAction" type="com.training.login.LoginAction" parameter="action">
+            <!-- 登入成功進入操作首頁 -->
+            <forward name="success" path="/FrontendServlet.do?action=buyGoodsView" redirect="true"/>
+            <!-- 登入失敗重回登入頁面 -->
+            <forward name="fail" path="/MemberLogin.jsp" />
+            <forward name="singupFail" path="/MemberSingup.jsp" />
+            <forward name="singupSuccess" path="/FrontendServlet.do?action=buyGoodsView" redirect="true"/>
+        </action>        
+        <action path="/ShoppingCarServlet" type="com.training.servlet.ShoppingCarServlet" parameter="action" name="goodsForm">
+        	 <forward name="addCartGoods" path="/FrontendServlet.do?action=buyGoodsView" redirect="true"/>        	 
+        </action>
+    </action-mappings>
+</struts-config>
